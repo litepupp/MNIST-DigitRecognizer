@@ -15,6 +15,8 @@ int main()
 
     srand(time(NULL));
 
+    //test
+
     NET testNetwork;
 
     testNetwork = create_network(testNetwork, LAYERS, neuronsPerLayer);
