@@ -13,6 +13,8 @@ int main()
     int neuronsPerLayer[] = {784, 16, 16, 10};
     int LAYERS = 4;
 
+    //test
+
     srand(time(NULL));
 
     NET testNetwork;
