@@ -28,7 +28,7 @@ SOFTWARE.
 
 #include "net.h"
 #include "math.h"
-
+#include "input.h"
 
 //28 x 28 Pixel Image => (784, 16, 16, 10)
 
@@ -45,7 +45,7 @@ int main()
     
     initialize_network_values(completedNetwork);
     
-    load_random_inputs(completedNetwork);
+    //load_random_inputs(completedNetwork);
 
     //print_entire_network(completedNetwork);
 

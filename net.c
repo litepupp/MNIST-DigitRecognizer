@@ -89,7 +89,7 @@ void print_entire_network(NET* Network)
 
             printf("( L:%d N:%-3d  --[W:%10lf]->  L:%d N:%-2d )\n", 
                 i, neuronFrom, 
-                Network.weights[i][j], 
+                Network -> weights[i][j], 
                 (i + 1), neuronTo);
         }
 

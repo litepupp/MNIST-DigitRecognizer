@@ -34,6 +34,7 @@ void classify_network(NET Network)
 }
 */
 
+
 void forward_propagation(NET* Network)
 {
     int currentLayer, currentNeuron, currentWeight;
