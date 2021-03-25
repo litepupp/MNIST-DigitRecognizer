@@ -27,6 +27,16 @@ SOFTWARE.
 
 #include "net.h"
 
+typedef struct MNIST
+{
+	double** trainIMG;
+	double** testIMG;
+	int* trainLABEL;
+	int* testLABEL;
+} MNIST;
 
+void initialize_mnist_data(MNIST* data);
+void load_mnist_data(MNIST* data);
+void load_training_image(NET* Network, double** trainIMG, int imageNum);
 
 #endif

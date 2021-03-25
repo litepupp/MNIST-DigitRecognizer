@@ -34,20 +34,18 @@ SOFTWARE.
 
 int main()
 {
+    srand(time(NULL));
     int neuronsPerLayer[] = {784, 16, 16, 10};
     int LAYERS = 4;
 
-    srand(time(NULL));
-
+    MNIST* imageData;
     NET* completedNetwork;
 
-    completedNetwork = create_network(LAYERS, neuronsPerLayer);
-    
-    initialize_network_values(completedNetwork);
-    
-    //load_random_inputs(completedNetwork);
+    load_mnist_data(imageData);
 
-    //print_entire_network(completedNetwork);
+    create_network(completedNetwork, LAYERS, neuronsPerLayer);
+
+    load_training_image(completedNetwork);
 
     forward_propagation(completedNetwork);
 

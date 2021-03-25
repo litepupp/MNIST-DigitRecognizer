@@ -44,7 +44,7 @@ void load_random_inputs(NET* Network);
 void print_entire_network(NET* Network);
 void print_output_layer(NET* Network);
 
-NET* create_network(int LAYERS, int neuronsPerLayer[]);
+void create_network(NET* Network, int LAYERS, int neuronsPerLayer[]);
 int* set_NPL_array(int LAYERS, int neuronsPerLayer[]);
 Neuron** create_neurons(int LAYERS, int neuronsPerLayer[]);
 double** create_weights(int LAYERS, int neuronsPerLayer[]);

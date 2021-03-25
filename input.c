@@ -30,5 +30,41 @@ SOFTWARE.
 
 #include "input.h"
 
+#define NUM_TRAIN 60000
+#define NUM_TEST 10000
+#define IMGSIZE 784
 
+void initialize_mnist_data(MNIST* data)
+{
+    int i;
+    
+    data -> trainIMG = (double**)malloc(NUM_TRAIN * sizeof(double*));
+    for (i = 0; i < NUM_TRAIN; i++)
+    {
+        data -> trainIMG[i] = (double*)malloc(IMGSIZE * sizeof(double));
+    }
+
+    data -> testIMG = (double**)malloc(NUM_TEST * sizeof(double*));
+    for (i = 0; i < NUM_TEST; i++)
+    {
+        data -> trainIMG[i] = (double*)malloc(IMGSIZE * sizeof(double));
+    }
+
+    data -> trainLABEL = (int*)malloc(NUM_TRAIN * sizeof(int));
+    data -> testLABEL = (int*)malloc(NUM_TEST * sizeof(int));
+}
+
+
+void load_mnist_data(MNIST* data)
+{
+    initialize_mnist_data(data);
+
+    
+}
+
+
+void load_training_image(NET* Network, double** trainIMG, int imageNum)
+{
+
+}
 

@@ -98,16 +98,16 @@ void print_entire_network(NET* Network)
 }
 
 
-NET* create_network(int LAYERS, int neuronsPerLayer[])
+void create_network(NET* Network, int LAYERS, int neuronsPerLayer[])
 {
-    NET* temp = (NET*)malloc(sizeof(NET));
+    Network = (NET*)malloc(sizeof(NET));
     
-    temp -> layers = LAYERS;
-    temp -> NPL = set_NPL_array(LAYERS, neuronsPerLayer);
-    temp -> neurons = create_neurons(LAYERS, neuronsPerLayer);
-    temp -> weights = create_weights(LAYERS, neuronsPerLayer);
-    
-    return temp;
+    Network -> layers = LAYERS;
+    Network -> NPL = set_NPL_array(LAYERS, neuronsPerLayer);
+    Network -> neurons = create_neurons(LAYERS, neuronsPerLayer);
+    Network -> weights = create_weights(LAYERS, neuronsPerLayer);
+
+    initialize_network_values(Network);
 }
 
 
