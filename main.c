@@ -30,24 +30,34 @@ SOFTWARE.
 #include "math.h"
 #include "input.h"
 
-//28 x 28 Pixel Image => (784, 16, 16, 10)
 
-int main()
+int main(int argc, char** argv)
 {
     srand(time(NULL));
-    int neuronsPerLayer[] = {784, 16, 16, 10};
-    int LAYERS = 4;
 
-    MNIST* imageData;
+    load_mnist_data();
+
+    MNIST* imageData = &data;
+
+    int LAYERS = 4;
+    int neuronsPerLayer[] = {IMG_SIZE, 16, 16, 10};
+
+    int imgNum = 0;
+    int isTesting = 0;
+
     NET* completedNetwork;
 
-    load_mnist_data(imageData);
+    completedNetwork = create_network(LAYERS, neuronsPerLayer);
 
-    create_network(completedNetwork, LAYERS, neuronsPerLayer);
+    initialize_network_values(completedNetwork);
 
-    load_training_image(completedNetwork);
+    load_single_image(completedNetwork, imgNum, isTesting);
 
     forward_propagation(completedNetwork);
+
+    print_image(imgNum, isTesting);
+
+    print_expected_output(imgNum, isTesting);
 
     print_output_layer(completedNetwork);
 

@@ -54,6 +54,21 @@ void print_output_layer(NET* Network)
 }
 
 
+void print_input_layer(NET* Network)
+{
+    int i;
+
+    printf("\nINPUT:\n\n");
+    for (i = 0; i < Network -> NPL[0]; i++)
+    {
+        printf("L:%d N:%-3d A:%-2lf B:%-2lf\n", 
+            (0), i, 
+            Network -> neurons[0][i].activation, 
+            Network -> neurons[0][i].bias);
+    }
+}
+
+
 void print_entire_network(NET* Network)
 {
     int i, j;
@@ -98,16 +113,16 @@ void print_entire_network(NET* Network)
 }
 
 
-void create_network(NET* Network, int LAYERS, int neuronsPerLayer[])
+NET* create_network(int LAYERS, int neuronsPerLayer[])
 {
-    Network = (NET*)malloc(sizeof(NET));
+    NET* temp = (NET*)malloc(sizeof(NET));
     
-    Network -> layers = LAYERS;
-    Network -> NPL = set_NPL_array(LAYERS, neuronsPerLayer);
-    Network -> neurons = create_neurons(LAYERS, neuronsPerLayer);
-    Network -> weights = create_weights(LAYERS, neuronsPerLayer);
+    temp -> layers = LAYERS;
+    temp -> NPL = set_NPL_array(LAYERS, neuronsPerLayer);
+    temp -> neurons = create_neurons(LAYERS, neuronsPerLayer);
+    temp -> weights = create_weights(LAYERS, neuronsPerLayer);
 
-    initialize_network_values(Network);
+    return temp;
 }
 
 
@@ -165,7 +180,7 @@ void initialize_network_values(NET* Network)
 }
 
 
-void initialize_neuron_values(Neuron** neurons, int LAYERS, int neuronsPerLayer[])
+void initialize_neuron_values(Neuron** neurons, int LAYERS, int* neuronsPerLayer)
 {
     int i, j;
     for (i = 0; i < LAYERS; i++)
@@ -179,7 +194,7 @@ void initialize_neuron_values(Neuron** neurons, int LAYERS, int neuronsPerLayer[
 }
 
 
-void initialize_weight_values(double** weights, int LAYERS, int neuronsPerLayer[])
+void initialize_weight_values(double** weights, int LAYERS, int* neuronsPerLayer)
 {
     int i, j, neuronsOut, neuronsIn;
     double xInit;
