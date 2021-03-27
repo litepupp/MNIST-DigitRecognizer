@@ -37,7 +37,7 @@ int main(int argc, char** argv)
 
     load_mnist_data();
 
-    MNIST* imageData = &data;
+    //MNIST* imageData = &data;
 
     int LAYERS = 4;
     int neuronsPerLayer[] = {IMG_SIZE, 16, 16, 10};
