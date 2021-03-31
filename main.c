@@ -42,8 +42,10 @@ int main(int argc, char** argv)
     int LAYERS = 4;
     int neuronsPerLayer[] = {IMG_SIZE, 16, 16, 10};
 
-    int imgNum = 0;
+    int imgNum = 1754;
     int isTesting = 0;
+
+    print_image(imgNum, isTesting);
 
     NET* completedNetwork;
 
@@ -54,8 +56,6 @@ int main(int argc, char** argv)
     load_single_image(completedNetwork, imgNum, isTesting);
 
     forward_propagation(completedNetwork);
-
-    print_image(imgNum, isTesting);
 
     print_expected_output(imgNum, isTesting);
 
