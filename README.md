@@ -1,6 +1,6 @@
 # MNIST-DigitRecognizer
-Basic Feedforward Neural Net that recognizes Handwritten Digits<br />
-Trained using MNIST dataset<br />
+Simple Feedforward Neural Net that classifies Handwritten Digits<br />
+Trained using the MNIST dataset<br />
 Written in C99, no external dependencies<br />
 
 Read the **[wiki](https://github.com/litepupp/MNIST-DigitRecognizer/wiki)** for more info!<br />
