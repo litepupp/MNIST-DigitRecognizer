@@ -44,11 +44,11 @@ SOFTWARE.
 int imageInfoArr[4];
 int labelInfoArr[2];
 
-unsigned char train_image_buff[NUM_TRAIN_IMG][IMG_SIZE];
-unsigned char train_label_buff[NUM_TRAIN_IMG][1];
+unsigned char* imageBuff;
+unsigned char* labelBuff;
 
-unsigned char test_image_buff[NUM_TEST_IMG][IMG_SIZE];
-unsigned char test_label_buff[NUM_TEST_IMG][1];
+FILE* labelFile;
+FILE* imageFile;
 
 typedef struct MNIST
 {
@@ -59,9 +59,6 @@ typedef struct MNIST
 } MNIST;
 
 MNIST data;
-
-FILE* labelFile;
-FILE* imageFile;
 
 void read_training_images();
 void read_training_labels();

@@ -26,7 +26,9 @@ SOFTWARE.
 
 void read_training_images()
 {
-    int i;
+    int i, j;
+
+    imageBuff = (unsigned char*)malloc(sizeof(unsigned char) * IMG_SIZE);
 
     imageFile = fopen(TRAIN_IMG_PATH, "rb");
 
@@ -34,9 +36,15 @@ void read_training_images()
 
     for (i = 0; i < NUM_TRAIN_IMG; i++)
     {
-        fread(train_image_buff[i], sizeof(unsigned char), IMG_SIZE, imageFile);
+        fread(imageBuff, sizeof(unsigned char), IMG_SIZE, imageFile);
+        
+        for (j = 0; j < IMG_SIZE; j++)
+        {
+            data.trainIMG[i][j] = (double)imageBuff[j] / (double)255;
+        }
     }
 
+    free(imageBuff);
     fclose(imageFile);
 }
 
@@ -45,22 +53,29 @@ void read_training_labels()
 {
     int i;
 
+    labelBuff = (unsigned char*)malloc(sizeof(unsigned char));
+
     labelFile = fopen(TRAIN_LABEL_PATH, "rb");
 
     fread(labelInfoArr, sizeof(int), 2, labelFile);
     
     for (i = 0; i < NUM_TRAIN_IMG; i++)
     {
-        fread(train_label_buff[i], sizeof(unsigned char), 1, labelFile);   
+        fread(labelBuff, sizeof(unsigned char), 1, labelFile);
+
+        data.trainLABEL[i] = (int)(*labelBuff);
     }
 
+    free(labelBuff);
     fclose(labelFile);
 }
 
 
 void read_testing_images()
 {
-    int i;
+    int i, j;
+
+    imageBuff = (unsigned char*)malloc(sizeof(unsigned char) * IMG_SIZE);
 
     imageFile = fopen(TEST_IMG_PATH, "rb");
 
@@ -68,9 +83,15 @@ void read_testing_images()
     
     for (i = 0; i < NUM_TEST_IMG; i++)
     {
-        fread(test_image_buff[i], sizeof(unsigned char), IMG_SIZE, imageFile);   
+        fread(imageBuff, sizeof(unsigned char), IMG_SIZE, imageFile);
+
+        for (j = 0; j < IMG_SIZE; j++)
+        {
+            data.testIMG[i][j] = (double)imageBuff[j] / (double)255;
+        }  
     }
 
+    free(imageBuff);
     fclose(imageFile);
 }
 
@@ -79,78 +100,31 @@ void read_testing_labels()
 {
     int i;
 
+    labelBuff = (unsigned char*)malloc(sizeof(unsigned char));
+
     labelFile = fopen(TEST_LABEL_PATH, "rb");
 
     fread(labelInfoArr, sizeof(int), 2, labelFile);
     
     for (i = 0; i < NUM_TEST_IMG; i++)
     {
-        fread(test_label_buff[i], sizeof(unsigned char), 1, labelFile);   
+        fread(labelBuff, sizeof(unsigned char), 1, labelFile);
+
+        data.testLABEL[i] = (int)(*labelBuff);
     }
 
+    free(labelBuff);
     fclose(labelFile);
-}
-
-
-void convert_training_images()
-{
-    int i, j;
-    for (i = 0; i < NUM_TRAIN_IMG; i++)
-    {
-        for (j = 0; j < IMG_SIZE; j++)
-        {
-            data.trainIMG[i][j]  = ((double)train_image_buff[i][j] / (double)255.0);
-        }
-    }
-}
-
-
-void convert_training_labels()
-{
-    int i;
-    for (i = 0; i < NUM_TRAIN_IMG; i++)
-    {
-        data.trainLABEL[i] = (int)train_label_buff[i][0];
-    }
-}
-
-
-void convert_testing_images()
-{
-    int i, j;
-    for (i = 0; i < NUM_TEST_IMG; i++)
-    {
-        for (j = 0; j < IMG_SIZE; j++)
-        {
-            data.testIMG[i][j]  = ((double)test_image_buff[i][j] / (double)255.0);
-        }
-    }
-}
-
-
-void convert_testing_labels()
-{
-    int i;
-    for (i = 0; i < NUM_TEST_IMG; i++)
-    {
-        data.testLABEL[i] = (int)test_label_buff[i][0];
-    }
 }
 
 
 void load_mnist_data()
 {
     read_training_images();
-    convert_training_images();
-
     read_training_labels();
-    convert_training_labels();
 
     read_testing_images();
-    convert_testing_images();
-    
     read_testing_labels();
-    convert_testing_labels();
 }
 
 
@@ -165,7 +139,7 @@ void load_single_image(NET* Network, int imageNum, int isTesting)
             Network -> neurons[0][j].activation = data.testIMG[imageNum][j];
         }
     }
-    //Testing Image Selected
+    //Training Image Selected
     else
     {
         int i;
@@ -188,11 +162,11 @@ void print_image(int imageNum, int isTesting)
         {
             if (data.testIMG[imageNum][i] == 0.0)
             {
-                printf("    ");
+                printf("   ");
             }
             else
             {
-                printf("%1.1f ", data.testIMG[imageNum][i]);
+                printf("%1.1f", data.testIMG[imageNum][i]);
             }
         }
         //Training Image Selected
@@ -200,11 +174,11 @@ void print_image(int imageNum, int isTesting)
         {
             if (data.trainIMG[imageNum][i] == 0.0)
             {
-                printf("    ");
+                printf("   ");
             }
             else
             {
-                printf("%1.1f ", data.trainIMG[imageNum][i]);
+                printf("%1.1f", data.trainIMG[imageNum][i]);
             }
         }
 
