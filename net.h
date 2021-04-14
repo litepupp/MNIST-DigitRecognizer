@@ -44,6 +44,7 @@ void load_random_inputs(NET* Network);
 void print_entire_network(NET* Network);
 void print_input_layer(NET* Network);
 void print_output_layer(NET* Network);
+void print_expected_output(NET* Network, double* expectedOut);
 
 NET* create_network(int LAYERS, int neuronsPerLayer[]);
 int* set_NPL_array(int LAYERS, int neuronsPerLayer[]);
@@ -54,7 +55,7 @@ void initialize_network_values(NET* Network);
 void initialize_neuron_values(Neuron** neurons, int LAYERS, int neuronsPerLayer[]);
 void initialize_weight_values(double** weights, int LAYERS, int neuronsPerLayer[]);
 
-void free_network(NET* network);
+void free_network(NET* Network);
 void free_NPL_array(int* NPLArray);
 void free_neurons(Neuron** neurons, int LAYERS);
 void free_weights(double** weights, int LAYERS);

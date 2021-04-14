@@ -27,12 +27,21 @@ SOFTWARE.
 
 #include "math.h"
 
-/*
-void classify_network(NET Network)
-{
 
+void test_mnistclassify_network(NET* Network)
+{
+    int imageNum;
+    int isTesting = 0;
+    double expectedOut[10];
+
+    for (imageNum = 0; imageNum < 10; imageNum++)
+    {
+        load_single_image(Network, imageNum, isTesting);
+        label_to_expected_out(expectedOut, imageNum, isTesting);
+        forward_propagation(Network);
+        test_loss_calc(Network, expectedOut);
+    }
 }
-*/
 
 
 void forward_propagation(NET* Network)
@@ -60,6 +69,21 @@ void forward_propagation(NET* Network)
             Network -> neurons[currentLayer + 1][currentNeuron].activation = sigmoid_function(weightedSum);
         }
     }
+}
+
+void test_loss_calc(NET* Network, double* expectedOut)
+{
+    int i;
+    double totalLoss, currentActivation;
+
+    for (i = 0; i < Network -> NPL[Network -> layers - 1]; i++)
+    {
+        currentActivation = Network -> neurons[Network -> layers - 1][i].activation;
+
+        totalLoss += pow((expectedOut[i] - currentActivation), 2);
+    }
+
+    printf("LOSS: %lf\n\n", totalLoss);
 }
 
 

@@ -43,7 +43,7 @@ void print_output_layer(NET* Network)
 {
     int i;
 
-    printf("\nOUTPUT:\n\n");
+    printf("\nOUTPUT:\n");
     for (i = 0; i < Network -> NPL[Network -> layers - 1]; i++)
     {
         printf("L:%d N:%-3d A:%-2lf B:%-2lf\n", 
@@ -109,6 +109,19 @@ void print_entire_network(NET* Network)
         }
 
         printf("***\n");
+    }
+}
+
+
+void print_expected_output(NET* Network, double* expectedOut)
+{
+    int i; 
+
+    printf("\nExpected Output:\n");
+    
+    for (i = 0; i < Network -> NPL[Network -> layers - 1]; i++)
+    {
+        printf("L:%d N:%-3d A:%-2lf\n", (Network -> layers - 1), i, expectedOut[i]);
     }
 }
 
@@ -221,6 +234,8 @@ void initialize_weight_values(double** weights, int LAYERS, int* neuronsPerLayer
             weights[i][j] = (xInit + xInit) * ((double)rand() / (double)RAND_MAX) - xInit;
         }
     }
+
+    printf("\n");
 }
 
 

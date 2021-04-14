@@ -32,7 +32,7 @@ void read_training_images()
 
     imageFile = fopen(TRAIN_IMG_PATH, "rb");
 
-    fread(imageInfoArr, sizeof(int), 4, imageFile);
+    fread(imageInfo, sizeof(int), 4, imageFile);
 
     for (i = 0; i < NUM_TRAIN_IMG; i++)
     {
@@ -57,7 +57,7 @@ void read_training_labels()
 
     labelFile = fopen(TRAIN_LABEL_PATH, "rb");
 
-    fread(labelInfoArr, sizeof(int), 2, labelFile);
+    fread(labelInfo, sizeof(int), 2, labelFile);
     
     for (i = 0; i < NUM_TRAIN_IMG; i++)
     {
@@ -79,7 +79,7 @@ void read_testing_images()
 
     imageFile = fopen(TEST_IMG_PATH, "rb");
 
-    fread(imageInfoArr, sizeof(int), 4, imageFile);
+    fread(imageInfo, sizeof(int), 4, imageFile);
     
     for (i = 0; i < NUM_TEST_IMG; i++)
     {
@@ -104,7 +104,7 @@ void read_testing_labels()
 
     labelFile = fopen(TEST_LABEL_PATH, "rb");
 
-    fread(labelInfoArr, sizeof(int), 2, labelFile);
+    fread(labelInfo, sizeof(int), 2, labelFile);
     
     for (i = 0; i < NUM_TEST_IMG; i++)
     {
@@ -130,6 +130,8 @@ void load_mnist_data()
 
 void load_single_image(NET* Network, int imageNum, int isTesting)
 {
+    int imageLabel = (isTesting == 1 ? data.testLABEL[imageNum] : data.trainLABEL[imageNum]);
+
     //Testing Image Selected
     if (isTesting == 1)
     {
@@ -148,12 +150,15 @@ void load_single_image(NET* Network, int imageNum, int isTesting)
             Network -> neurons[0][i].activation = data.trainIMG[imageNum][i];
         }
     }
+
+    printf("Load %s_IMG[%d] label: %d\n", (isTesting == 1 ? "TEST" : "TRAIN"), imageNum, imageLabel);
 }
 
 
 void print_image(int imageNum, int isTesting)
 {
     int i;
+    int imageLabel = (isTesting == 1 ? data.testLABEL[imageNum] : data.trainLABEL[imageNum]);
 
     for (i = 0; i < 784; i++)
     {   
@@ -188,29 +193,24 @@ void print_image(int imageNum, int isTesting)
         }
     }
 
-    printf("%s_IMG[%d] label: %d\n", 
-        (isTesting == 1 ? "TEST" : "TRAIN"), 
-        imageNum, 
-        (isTesting == 1 ? data.testLABEL[imageNum] : data.trainLABEL[imageNum]));
+    printf("%s_IMG[%d] label: %d\n", (isTesting == 1 ? "TEST" : "TRAIN"), imageNum, imageLabel);
 }
 
 
-void print_expected_output(int imageNum, int isTesting)
+void label_to_expected_out(double* expectedOut, int imageNum, int isTesting)
 {
     int i; 
-    int imgLabel = (isTesting == 1 ? data.testLABEL[imageNum] : data.trainLABEL[imageNum]);
+    int imageLabel = (isTesting == 1 ? data.testLABEL[imageNum] : data.trainLABEL[imageNum]);
 
-    printf("\nImage: %d, Label: %d\nExpected Output:\n", imageNum, imgLabel);
-    
     for (i = 0; i < 10; i++)
     {
-        if (i != imgLabel)
+        if (i != imageLabel)
         {
-            printf("L:%d N:%-3d A:%-2lf B:%-2lf\n", 3, i, (double)0, (double)0);
+            expectedOut[i] = (double)0;
         }
-        else if (i == imgLabel)
+        else if (i == imageLabel)
         {
-            printf("L:%d N:%-3d A:%-2lf B:%-2lf\n", 3, i, (double)1, (double)0);
+            expectedOut[i] = (double)1;
         }
     }
 }

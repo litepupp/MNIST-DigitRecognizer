@@ -22,6 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+#ifndef INPUT_H_
+#define INPUT_H_
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -41,8 +44,8 @@ SOFTWARE.
 #define NUM_TRAIN_IMG 60000
 #define NUM_TEST_IMG 10000
 
-int imageInfoArr[4];
-int labelInfoArr[2];
+int imageInfo[4];
+int labelInfo[2];
 
 unsigned char* imageBuff;
 unsigned char* labelBuff;
@@ -76,4 +79,6 @@ void load_mnist_data();
 
 void load_single_image(NET* Network, int imageNum, int isTesting);
 void print_image(int imageNum, int isTesting);
-void print_expected_output(int imageNum, int isTesting);
+void label_to_expected_out(double* expectedOut, int imageNum, int isTesting);
+
+#endif

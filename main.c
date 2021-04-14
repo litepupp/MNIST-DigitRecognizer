@@ -40,24 +40,13 @@ int main(int argc, char** argv)
     int LAYERS = 4;
     int neuronsPerLayer[] = {IMG_SIZE, 16, 16, 10};
 
-        int imgNum = 911;
-        int isTesting = 1;
-
-        print_image(imgNum, isTesting);
-
     NET* completedNetwork;
 
     completedNetwork = create_network(LAYERS, neuronsPerLayer);
 
     initialize_network_values(completedNetwork);
 
-        load_single_image(completedNetwork, imgNum, isTesting);
-
-        forward_propagation(completedNetwork);
-
-        print_expected_output(imgNum, isTesting);
-
-        print_output_layer(completedNetwork);
+        test_mnistclassify_network(completedNetwork);
 
     free_network(completedNetwork);
 

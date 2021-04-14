@@ -26,6 +26,10 @@ SOFTWARE.
 #define MATH_H_
 
 #include "net.h"
+#include "input.h"
+
+void test_loss_calc(NET* Network, double* expectedOut);
+void test_mnistclassify_network(NET* Network);
 
 void classify_network(NET* Network);
 
