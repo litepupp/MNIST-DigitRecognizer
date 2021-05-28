@@ -32,7 +32,7 @@ void test_mnistclassify_network(NET* Network)
 {
     int imageNum;
     int isTesting = 0;
-    double expectedOut[10];
+    double expectedOut[Network -> NPL[Network -> layers - 1]];
 
     for (imageNum = 0; imageNum < 10; imageNum++)
     {
