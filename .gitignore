@@ -2,3 +2,5 @@
 a.out
 a.out.dSYM/Contents/Info.plist
 .DS_Store
+*.o
+NeuralNet

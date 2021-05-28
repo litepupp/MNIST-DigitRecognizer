@@ -40,6 +40,7 @@ void test_mnistclassify_network(NET* Network)
         label_to_expected_out(expectedOut, imageNum, isTesting);
         forward_propagation(Network);
         test_loss_calc(Network, expectedOut);
+        print_output_layer(Network);
     }
 }
 
@@ -74,7 +75,8 @@ void forward_propagation(NET* Network)
 void test_loss_calc(NET* Network, double* expectedOut)
 {
     int i;
-    double totalLoss, currentActivation;
+    double totalLoss = 0.0;
+    double currentActivation = 0.0;
 
     for (i = 0; i < Network -> NPL[Network -> layers - 1]; i++)
     {
